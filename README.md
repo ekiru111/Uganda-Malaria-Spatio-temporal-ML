@@ -44,7 +44,7 @@ A hybrid ensemble approach was employed, combining a Random Forest classifier wi
 
 ***Data Quality:*** Analysis was conducted on 7,787 individual children across Uganda with complete malaria RDT (Rapid Diagnostic Test) results and comprehensive socioeconomic, environmental, and geographic data.
 
-### **Top 15 Malaria Risk Drivers (Feature Importance)**
+### **Top 4 Malaria Risk Drivers (Feature Importance)**
 The XGBoost model identified the following top factors influencing malaria risk in Uganda:
 
 ***Housing Construction - Thatch/Palm Leaf Roofs (0.31 importance)*** - The most dominant risk factor; homes with traditional thatch roofing showed dramatically elevated malaria risk
