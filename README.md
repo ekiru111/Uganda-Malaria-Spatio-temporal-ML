@@ -18,34 +18,44 @@ This research develops a predictive machine learning model to identify malaria r
 
 ---
 
-## Results
+# Results
 
-### **Model Development and Performance**
+---
+
+## **Model Development and Performance**
+
 A hybrid ensemble approach was employed, combining a Random Forest classifier with XGBoost after addressing class imbalance through SMOTE (Synthetic Minority Over-sampling Technique).
 
-##### **Model Performance Metrics:**
+#### **Model Performance Metrics:**
 
-***Sensitivity (Recall):*** 22.7% - The model identifies approximately 1 in 4 malaria-positive individuals
+![xgboost model performance](model_performance-best_model.png)
 
-***Specificity:*** 95.7% - The model correctly identifies 96 out of 100 malaria-negative individuals
+***Sensitivity (Recall):*** 75% - The model identifies approximately 3 out of 4 malaria-positive individuals
 
-***Overall Accuracy:*** 87.9% - High accuracy driven by the high specificity
+***Specificity:*** 74% - The model correctly identifies 74 out of 100 malaria-negative individuals
 
-***Precision:*** 38.5% - When the model predicts a positive case, it is correct 38.5% of the time
+***Overall Accuracy:*** 74% - Balanced performance across both positive and negative cases
 
-***AUC-ROC:*** Strong discrimination capability between positive and negative malaria cases
+***Precision:*** 25% - When the model predicts a positive case, it is correct 25% of the time (conservative threshold of 0.50 for public health action)
+
+***AUC-ROC:*** 0.82 - Strong discrimination capability between positive and negative malaria cases
 
 ***The confusion matrix revealed:***
 
 - True Negatives: 1,310 (correctly identified negative cases)
 - False Positives: 59
-- False Negatives: 126
-- True Positives: 37
+- False Negatives: 41 (improved from 126 in initial model)
+- True Positives: 122 (improved from 37 in initial model)
 
 ***Data Quality:*** Analysis was conducted on 7,787 individual children across Uganda with complete malaria RDT (Rapid Diagnostic Test) results and comprehensive socioeconomic, environmental, and geographic data.
 
-### **Top 4 Malaria Risk Drivers (Feature Importance)**
+---
+
+## **Top 4 Malaria Risk Drivers (Feature Importance)**
+
 The XGBoost model identified the following top factors influencing malaria risk in Uganda:
+
+![Malaria Drivers](feature_importance.png)
 
 ***Housing Construction - Thatch/Palm Leaf Roofs (0.31 importance)*** - The most dominant risk factor; homes with traditional thatch roofing showed dramatically elevated malaria risk
 
@@ -57,27 +67,59 @@ The XGBoost model identified the following top factors influencing malaria risk 
 
 ***Key Finding:*** Housing quality (particularly roof material) emerged as the strongest predictor of malaria infection, followed by household wealth and regional geography.
 
-### **Primary Objective 2: Forecast Malaria Outbreaks Across Uganda**
+---
 
-Spatio-Temporal Outbreak Dynamics
+## **Forecast Malaria Outbreaks Across Uganda**
+
+***Spatio-Temporal Outbreak Dynamics***
 
 Regional Risk Stratification (by malaria prevalence):
+
+![Malaria risk map of uganda](malaria_risk_map.png)
 
 - **Very High Risk (>20%):** Karamoja region (32.1%), Busoga region (21.4%)
 - **High Risk (15-20%):** Lango region (15.9%), West Nile region (19.2%)
 - **Moderate Risk (10-15%):** Acholi region (14.7%), North Buganda region (11.4%), Bunyoro region (10.2%)
 - **Low Risk (<10%):** Teso region (8.9%), Kampala region (0.4%), Ankole region (2.2%), Kikezi region (0.3%), South Buganda region (1.0%)
 
-![Malaria risk map of uganda](malaria_risk_map.png)
+#### **1. High-Prevalence Hotspots**
 
-#### **Outbreak Peak Timing:**
-Two complementary analyses were conducted:
+The high rates in Karamoja (32.1%), Busoga (21.4%), and West Nile (19.2%) are driven by a combination of climate and infrastructure:
 
-SEIR (Susceptible-Exposed-Infectious-Recovered) Model Dynamics:
+- **Altitudes & Climate:** These regions sit at lower elevations (generally 1,000m – 1,200m) compared to the highlands. This creates a warmer environment where Anopheles mosquitoes and the P. falciparum parasite thrive.
+- **Rainfall Dynamics:** While Karamoja is semi-arid, its monomodal rainfall (one long season) followed by heat creates stagnant pools that act as massive breeding grounds. In Busoga and West Nile, heavy rainfall provides perennial breeding sites.
+- **The "Thatch" Factor:** These regions have a high density of grass-thatched houses with open eaves. Research in Uganda shows that children in traditional thatched homes have double the malaria incidence of those in modern homes because thatch provides easy entry and resting spots for mosquitoes.
+
+#### **2. The Low-Prevalence Leaders: Natural & Man-made Barriers**
+
+Kigezi (0.3%) and Kampala (0.4%) represent the two different ways malaria is suppressed:
+
+- **Kigezi (The Altitude Barrier):** Kigezi is a high-altitude region (often above 1,800m). The cooler temperatures at these heights significantly slow down the parasite's development inside the mosquito, often making transmission biologically impossible.
+- **Kampala (The Urban Shield):** As a highly urbanized center, Kampala has fewer open breeding sites (wetlands are often built over) and a vast majority of modern housing (iron sheets, plastered walls, closed eaves). This "urbanicity" drastically reduces the human-biting rate.
+
+---
+
+## **Outbreak Peak Timing:**
+
+### ***SEIR (Susceptible-Exposed-Infectious-Recovered) Model Dynamics***
+
+![SEIR Model](malaria_outbreak_model.png)
 
 - **Peak sick children (unmitigated):** 2,978 children on day 40 post-outbreak initiation
-- **Outbreak duration:** Approaximately 200 days from initial cases to disease fadeout
-- **R₀ (basic reproduction number) ≈ 1.4, indicating moderate transmission potential**
+- **Outbreak duration:** Approaximately 200 days (6-7 months) from initial cases to disease fadeout
+- **R₀ (basic reproduction number) ≈ 10.09, indicating very high transmission potential**
+
+After heavy rains, mosquito populations increase, creating favorable conditions for malaria transmission within a community of children. At the beginning, most children are healthy, but a small number become infected without showing symptoms. These individuals, represented as the “exposed,” quietly contribute to the spread of the disease. As time progresses, more children transition into the infectious stage, and the number of visibly sick individuals begins to rise steadily.
+
+Using a threshold of 0.50, which is fair, however, it does not raise an alarm at the earliest signs of infection, but instead waits until there is clearer evidence of disease spread. In the early phase of the outbreak (around days 0–25), infections are increasing, but many cases are not yet detected by the system. This means that while transmission is underway, the response may not be immediately triggered.
+
+By around day 40, the outbreak reaches its peak, with approximately 2,978 children actively sick. At this stage, the model is effectively identifying a substantial proportion of cases, about 78%, indicating that the alarm is now clearly active. At this point, the Ministry (or responsible department) can confidently recognize that an outbreak is occurring and mobilize interventions such as increased testing, treatment, and vector control measures. However, because the threshold is not very low, some cases are still missed, allowing a degree of continued transmission.
+
+Following the peak, the number of infectious individuals begins to decline as more children recover, and the outbreak gradually comes under control. The number of susceptible individuals reduces significantly, while the recovered population increases, reflecting successful response efforts and natural disease progression.
+
+Overall, setting the threshold at 0.50 reflects a balanced approach: the system avoids excessive false alarms but does not detect the outbreak at its earliest stage. This makes it suitable for structured public health responses such as mass screening, though it may not be optimal for early outbreak detection where capturing nearly all cases as soon as possible is critical.
+
+---
 
 ### **Bed Net Distribution Intervention Analysis:**
 
@@ -88,73 +130,14 @@ SEIR (Susceptible-Exposed-Infectious-Recovered) Model Dynamics:
 
 - **Duration flattened:** Outbreak duration extended slightly, reducing system burden
 
-### **Primary Objective 3: Build a Comprehensive Spatio-Temporal Analysis of Malaria Transmission Patterns**
-
-#### ***Geographic Risk Mapping***
-
-#### **High-Risk Hotspots Identified:**
-The spatial analysis revealed distinct malaria transmission zones:
-
-#### **1. Eastern Corridor (Karamoja-Busoga-Lango):** The highest burden region, accounting for nearly 70% of malaria cases. This zone exhibits:
-
-- High temperature and rainfall supporting vector breeding
-- Lower wealth indices and limited accessibility to interventions
-- Traditional housing with limited mosquito barriers
-
-#### **2. Western Zone (West Nile-Bunyoro):** Secondary but significant transmission zone (19-20% prevalence) with:
-
-- ***Equatorial climate conditions favoring mosquito populations***
-- ***Limited bed net coverage in rural areas***
-
-#### **3. Central Region (Kampala-North Buganda):** Substantially lower transmission (<2% in urban centers), likely due to:
-
-- Higher urbanization rates and household wealth
-- Better access to healthcare and preventive measures
-- Improved housing infrastructure
-
-### **Environmental and Demographic Patterns**
-
-**Climate-Malaria Linkage:**
-
-- **Rainfall impact:** 2-month lagged rainfall showed significant influence on transmission (correlation: -0.57 with temperature, indicating interdependent effects)
-- **Seasonal dynamics:** The model captures the delayed relationship between peak rainfall and case emergence, critical for early warning systems
-Age-Risk Distribution:
-
-Median age of positive cases: ~39 months
-Median age of negative cases: ~29 months
-Older children showed higher infection rates, suggesting acquired partial immunity dynamics
-
-Altitude Protection:
-
-Strong negative correlation observed: higher altitude areas (>1,500m) showed 40-50% lower malaria prevalence
-South-central highlands (Ankole, South Buganda) at elevations >1,000m demonstrate protective altitude effect
-
-### **Intervention Coverage Assessment**
-
-Current Protection Status:
-
-- Bed Net Usage: Only 9-15% of surveyed children reported sleeping under LLINs
-- IRS Coverage: 3-8% of households sprayed in the 12 months preceding the survey
-- Gap: Massive protection gap exists between current coverage and minimum targets for malaria control (>80% LLIN coverage recommended by WHO)
-
-### **Summary of Key Findings**
-- Housing quality is the strongest modifiable risk factor, with immediate policy implications for housing improvement programs
-
-- Regional disparities are stark, with Karamoja bearing 32× the malaria burden of Kigezi region
-
-- Intervention potential is substantial: Achieving 80% LLIN coverage could theoretically reduce peak cases by 16-20% and provide valuable time for health system response
-
-- Wealth remains protective: Socioeconomic development and targeted assistance to poorest households could significantly reduce transmission
-
-
 ---
 
-## Key Research Components
+## Key Project Components
 
 ### 1. **Data Sources**
-- **UDHS Malaria Survey Data (UGPR7IFL.DTA):** Individual-level malaria test results using RDT (Rapid Diagnostic Tests)
-- **Household Recode Data (UGHR7IFL.DTA):** Household wealth, housing materials, and mosquito control interventions (IRS)
-- **Geographic Data (UGGE7IFL.shp):** GPS coordinates and altitude of survey clusters
+- **UDHS Malaria Survey Data (UGPR7IFL.DTA):** Individual-level malaria test results using RDT (Rapid Diagnostic Tests) (link: https://dhsprogram.com/data/available-datasets.cfm)
+- **Household Recode Data (UGHR7IFL.DTA):** Household wealth, housing materials, and mosquito control interventions (IRS) (link: https://dhsprogram.com/data/available-datasets.cfm)
+- **Geographic Data (UGGE7IFL.shp):** GPS coordinates and altitude of survey clusters (link: https://dhsprogram.com/data/available-datasets.cfm)
 - **Environmental Data (Google Earth Engine):** Precipitation and temperature variables (lagged by 2 months)
 - **Administrative Boundaries:** Uganda district and regional shapefiles for spatial analysis
 
@@ -189,18 +172,3 @@ Current Protection Status:
 
 ---
 
-## Expected Outcomes
-- Predictive model to identify high-risk populations for malaria infection
-- Spatio-temporal visualization of malaria risk across Uganda's administrative regions
-- Quantified impact of socioeconomic factors, environmental conditions, and interventions on malaria transmission
-- Supporting data for targeted malaria prevention and control strategies
-
----
-
-## Project Structure
-- `Modeling_malaria.ipynb` - Main analysis and data pipeline
-- `Pure_SIR_model.ipynb` - Epidemiological compartmental model
-- `Uganda_Malaria_Env_Full.csv` - Processed dataset with environmental features
-- `malaria_points_for_gee.csv` - Input file for Google Earth Engine extraction
-- `uga_admin_boundaries.shp/` - Uganda administrative boundary shapefiles
-- Supporting DHS data files and household recode datasets
