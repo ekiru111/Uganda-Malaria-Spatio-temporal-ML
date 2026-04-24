@@ -55,7 +55,7 @@ A hybrid ensemble approach was employed, combining a Random Forest classifier wi
 
 The XGBoost model identified the following top factors influencing malaria risk in Uganda:
 
-![Malaria Drivers](feature_importance.png)
+![Malaria Drivers]()
 
 ***Housing Construction - Thatch/Palm Leaf Roofs (0.31 importance)*** - The most dominant risk factor; homes with traditional thatch roofing showed dramatically elevated malaria risk
 
