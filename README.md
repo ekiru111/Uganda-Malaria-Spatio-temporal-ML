@@ -28,7 +28,7 @@ A hybrid ensemble approach was employed, combining a Random Forest classifier wi
 
 #### **Model Performance Metrics:**
 
-![xgboost model performance](model_performance-best_model.png)
+![xgboost model performance](model_performance-best_model.PNG)
 
 ***Sensitivity (Recall):*** 75% - The model identifies approximately 3 out of 4 malaria-positive individuals
 
