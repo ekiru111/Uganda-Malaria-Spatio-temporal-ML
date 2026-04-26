@@ -9,7 +9,9 @@
 ## Objective
 
 ### **Overall Objective**
-This research develops a predictive machine learning model to identify malaria risk factors and forecast malaria outbreaks across Uganda. The project integrates multiple data sources including demographic surveys, household characteristics, geographic information, and satellite-derived environmental variables to build a comprehensive spatio-temporal analysis of malaria transmission patterns.
+This research develops a predictive machine learning model to identify malaria risk factors and forecast malaria outbreaks across Uganda.
+
+The project integrates multiple data sources including demographic surveys, household characteristics, geographic information, and satellite-derived environmental variables to build a comprehensive spatio-temporal analysis of malaria transmission patterns.
 
 ### **Specific Objective**
 1. Develop a predictive machine learning model to identify malaria risk factors
@@ -24,9 +26,45 @@ This research develops a predictive machine learning model to identify malaria r
 
 ## **Model Development and Performance**
 
-A hybrid ensemble approach was employed, combining a Random Forest classifier with XGBoost after addressing class imbalance through SMOTE (Synthetic Minority Over-sampling Technique).
+Two models were evaluated that is, Random Forest and XGBoost to determine the most effective approach for identifying positive malaria cases. While both models were tested, XGBoost demonstrated superior potential for clinical application due to its high sensitivity
 
-#### **Model Performance Metrics:**
+***Baseline Performance (Positive Class: those with Malaria)***
+- Random Forest: Recall 0.52 / Precision 0.30
+- XGBoost: Recall 0.93 / Precision 0.19
+
+### **The Precision-Recall Trade-off**
+In malaria screening, the cost of a False Negative (missing an infected patient) is significantly higher than a False Positive (unnecessary follow-up testing). However, a precision of 0.19 is too low for efficient resource allocation.
+
+The goal here is to identify the "Sweet Spot" using the Precision-Recall Curve. The aim is to find an Optimal Threshold that maintains high diagnostic coverage while reducing "noise."
+- ***Target Metric:*** Maintain Recall at approximately 0.75 or above while optimizing Precision to approximately 0.25 and above.
+
+### **Finding the "Elbow"**
+By plotting Precision against Recall, we can visually identify the "Elbow", the point of diminishing returns. This is the specific threshold where we maximize the identification of malaria cases before the model's precision drops sharply.
+
+Adjusting the classification threshold allows us to move along this curve to reach our desired performance balance, ensuring the model is both safe for patients and practical for healthcare providers.
+
+![Precision Recall Tradeoff](precision_recall_tradeoff_xgb.png)
+
+**Precision (blue, dashed):** Of all predicted positives, how many are truly positive
+- Higher precision score ==> fewer false positives
+
+**Recall (green, solid):** Of all actual positives, how many you correctly identified
+- Higher recall score ==> fewer false negatives
+
+**Decision Threshold (Probability):** This is the probability cutoff to classify a case as positive malaria case
+
+#### **Interpreting the graph**
+
+***The Intersection (The Balanced Spot):*** The lines cross at a threshold of approximately 0.72. At this point, both Precision and Recall are roughly 35%. This is fair, but a 35% recall means we are still missing 65% of sick children. Not ideal for an outbreak.
+
+#### **The "Outbreak Prediction" Zone (Threshold 0.30 - 0.55):**
+If the threshold is set at 0.50:
+- Recall is ~78% (You catch nearly 8 out of 10 cases).
+- Precision is ~25% (1 in 4 alerts is a true malaria case).
+
+### **Model Performance Metrics:**
+
+We established the baseline performance of our XGBoost model using a 0.50 decision threshold, which provided the foundation for our subsequent tuning of the Precision-Recall balance.
 
 ![xgboost model performance](model_performance-best_model.PNG)
 
