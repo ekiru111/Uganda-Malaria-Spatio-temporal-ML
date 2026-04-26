@@ -89,6 +89,34 @@ We established the baseline performance of our XGBoost model using a 0.50 decisi
 
 ---
 
+## **Outbreak Peak Timing:**
+
+### ***SEIR (Susceptible-Exposed-Infectious-Recovered) Model Dynamics***
+
+## **S** -- β --> **E** --- α ---> **I** --- γ ---> **R**
+
+- β --> Transmission rate
+- α --> Incubation rate
+- γ --> Recovery rate
+
+![SEIR Model](malaria_outbreak_model.png)
+
+- **Peak sick children (unmitigated):** 2,978 children on day 40 post-outbreak initiation
+- **Outbreak duration:** Approaximately 200 days (6-7 months) from initial cases to disease fadeout
+- **R₀ (basic reproduction number) ≈ 10.09, indicating very high transmission potential**
+
+After heavy rains, mosquito populations increase, creating favorable conditions for malaria transmission within a community of children. At the beginning, most children are healthy, but a small number become infected without showing symptoms. These individuals, represented as the “exposed,” quietly contribute to the spread of the disease. As time progresses, more children transition into the infectious stage, and the number of visibly sick individuals begins to rise steadily.
+
+Using a threshold of 0.50, which is fair, however, it does not raise an alarm at the earliest signs of infection, but instead waits until there is clearer evidence of disease spread. In the early phase of the outbreak (around days 0–25), infections are increasing, but many cases are not yet detected by the system. This means that while transmission is underway, the response may not be immediately triggered.
+
+By around day 40, the outbreak reaches its peak, with approximately 2,978 children actively sick. At this stage, the model is effectively identifying a substantial proportion of cases, about 78%, indicating that the alarm is now clearly active. At this point, the Ministry (or responsible department) can confidently recognize that an outbreak is occurring and mobilize interventions such as increased testing, treatment, and vector control measures. However, because the threshold is not very low, some cases are still missed, allowing a degree of continued transmission.
+
+Following the peak, the number of infectious individuals begins to decline as more children recover, and the outbreak gradually comes under control. The number of susceptible individuals reduces significantly, while the recovered population increases, reflecting successful response efforts and natural disease progression.
+
+Overall, setting the threshold at 0.50 reflects a balanced approach: the system avoids excessive false alarms but does not detect the outbreak at its earliest stage. This makes it suitable for structured public health responses such as mass screening, though it may not be optimal for early outbreak detection where capturing nearly all cases as soon as possible is critical.
+
+---
+
 ## **Top 4 Malaria Risk Drivers (Feature Importance)**
 
 The XGBoost model identified the following top factors influencing malaria risk in Uganda:
@@ -134,28 +162,6 @@ Kigezi (0.3%) and Kampala (0.4%) represent the two different ways malaria is sup
 
 - **Kigezi (The Altitude Barrier):** Kigezi is a high-altitude region (often above 1,800m). The cooler temperatures at these heights significantly slow down the parasite's development inside the mosquito, often making transmission biologically impossible.
 - **Kampala (The Urban Shield):** As a highly urbanized center, Kampala has fewer open breeding sites (wetlands are often built over) and a vast majority of modern housing (iron sheets, plastered walls, closed eaves). This "urbanicity" drastically reduces the human-biting rate.
-
----
-
-## **Outbreak Peak Timing:**
-
-### ***SEIR (Susceptible-Exposed-Infectious-Recovered) Model Dynamics***
-
-![SEIR Model](malaria_outbreak_model.png)
-
-- **Peak sick children (unmitigated):** 2,978 children on day 40 post-outbreak initiation
-- **Outbreak duration:** Approaximately 200 days (6-7 months) from initial cases to disease fadeout
-- **R₀ (basic reproduction number) ≈ 10.09, indicating very high transmission potential**
-
-After heavy rains, mosquito populations increase, creating favorable conditions for malaria transmission within a community of children. At the beginning, most children are healthy, but a small number become infected without showing symptoms. These individuals, represented as the “exposed,” quietly contribute to the spread of the disease. As time progresses, more children transition into the infectious stage, and the number of visibly sick individuals begins to rise steadily.
-
-Using a threshold of 0.50, which is fair, however, it does not raise an alarm at the earliest signs of infection, but instead waits until there is clearer evidence of disease spread. In the early phase of the outbreak (around days 0–25), infections are increasing, but many cases are not yet detected by the system. This means that while transmission is underway, the response may not be immediately triggered.
-
-By around day 40, the outbreak reaches its peak, with approximately 2,978 children actively sick. At this stage, the model is effectively identifying a substantial proportion of cases, about 78%, indicating that the alarm is now clearly active. At this point, the Ministry (or responsible department) can confidently recognize that an outbreak is occurring and mobilize interventions such as increased testing, treatment, and vector control measures. However, because the threshold is not very low, some cases are still missed, allowing a degree of continued transmission.
-
-Following the peak, the number of infectious individuals begins to decline as more children recover, and the outbreak gradually comes under control. The number of susceptible individuals reduces significantly, while the recovered population increases, reflecting successful response efforts and natural disease progression.
-
-Overall, setting the threshold at 0.50 reflects a balanced approach: the system avoids excessive false alarms but does not detect the outbreak at its earliest stage. This makes it suitable for structured public health responses such as mass screening, though it may not be optimal for early outbreak detection where capturing nearly all cases as soon as possible is critical.
 
 ---
 
