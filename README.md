@@ -182,7 +182,7 @@ Kigezi (0.3%) and Kampala (0.4%) represent the two different ways malaria is sup
 - **UDHS Malaria Survey Data (UGPR7IFL.DTA):** Individual-level malaria test results using RDT (Rapid Diagnostic Tests) (link: https://dhsprogram.com/data/available-datasets.cfm)
 - **Household Recode Data (UGHR7IFL.DTA):** Household wealth, housing materials, and mosquito control interventions (IRS) (link: https://dhsprogram.com/data/available-datasets.cfm)
 - **Geographic Data (UGGE7IFL.shp):** GPS coordinates and altitude of survey clusters (link: https://dhsprogram.com/data/available-datasets.cfm)
-- **Environmental Data (Google Earth Engine):** Precipitation and temperature variables (lagged by 2 months)
+- **Environmental Data (Google Earth Engine):** Precipitation and temperature variables (lagged by 2 months) -->This is attached
 - **Administrative Boundaries:** Uganda district and regional shapefiles for spatial analysis
 
 ### 2. **Data Processing Pipeline**
