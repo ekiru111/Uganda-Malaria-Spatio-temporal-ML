@@ -89,6 +89,24 @@ We established the baseline performance of our XGBoost model using a 0.50 decisi
 
 ---
 
+## **Top 4 Malaria Risk Drivers (Feature Importance)**
+
+The XGBoost model identified the following top factors influencing malaria risk in Uganda:
+
+![Malaria Drivers](feature_importance.png)
+
+***Housing Construction - Thatch/Palm Leaf Roofs (0.31 importance)*** - The most dominant risk factor; homes with traditional thatch roofing showed dramatically elevated malaria risk
+
+***Wealth Index - Richest Households (-0.07 importance)*** - Protective factor; wealthier households demonstrated significantly lower infection rates
+
+***Housing Construction - Iron Sheet Roofs (0.06 importance)*** - Moderate protective effect
+
+***Household Insecticide Spraying (IRS) (0.05 importance)*** - Protective intervention; households sprayed in the last 12 months showed reduced malaria risk
+
+***Key Finding:*** Housing quality (particularly roof material) emerged as the strongest predictor of malaria infection, followed by household wealth and regional geography.
+
+---
+
 ## **Outbreak Peak Timing:**
 
 ### ***SEIR (Susceptible-Exposed-Infectious-Recovered) Model Dynamics***
@@ -114,24 +132,6 @@ By around day 40, the outbreak reaches its peak, with approximately 2,978 childr
 Following the peak, the number of infectious individuals begins to decline as more children recover, and the outbreak gradually comes under control. The number of susceptible individuals reduces significantly, while the recovered population increases, reflecting successful response efforts and natural disease progression.
 
 Overall, setting the threshold at 0.50 reflects a balanced approach: the system avoids excessive false alarms but does not detect the outbreak at its earliest stage. This makes it suitable for structured public health responses such as mass screening, though it may not be optimal for early outbreak detection where capturing nearly all cases as soon as possible is critical.
-
----
-
-## **Top 4 Malaria Risk Drivers (Feature Importance)**
-
-The XGBoost model identified the following top factors influencing malaria risk in Uganda:
-
-![Malaria Drivers](feature_importance.png)
-
-***Housing Construction - Thatch/Palm Leaf Roofs (0.31 importance)*** - The most dominant risk factor; homes with traditional thatch roofing showed dramatically elevated malaria risk
-
-***Wealth Index - Richest Households (-0.07 importance)*** - Protective factor; wealthier households demonstrated significantly lower infection rates
-
-***Housing Construction - Iron Sheet Roofs (0.06 importance)*** - Moderate protective effect
-
-***Household Insecticide Spraying (IRS) (0.05 importance)*** - Protective intervention; households sprayed in the last 12 months showed reduced malaria risk
-
-***Key Finding:*** Housing quality (particularly roof material) emerged as the strongest predictor of malaria infection, followed by household wealth and regional geography.
 
 ---
 
